@@ -17,21 +17,6 @@ model User {
   createdAt DateTime @default(now())
 }
 
-model Blog {
-  id          Int      @id @default(autoincrement())
-  title       String
-  slug        String   @unique
-  content     String   @db.LongText
-  thumbnail   String?
-  seoTitle    String?
-  seoDesc     String?
-  published   Boolean  @default(false)
-  authorId   Int
-  author     User     @relation(fields: [authorId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
 enum Role {
   ADMIN
   EDITOR
@@ -41,11 +26,12 @@ model Blog {
   id        Int      @id @default(autoincrement())
   title     String
   slug      String   @unique
-  content   String   @db.LongText
-  thumbnail String?
+  content   String
+  thumbnail String
   published Boolean  @default(false)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  createdBy   Int
-  author      User   @relation(fields: [createdBy], references: [id])
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
 }
